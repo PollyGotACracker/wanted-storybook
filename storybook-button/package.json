@@ -1,0 +1,54 @@
+{
+  "name": "storybook-button",
+  "version": "1.0.0",
+  "description": "",
+  "author": "pollygotacracker",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf dist && rollup -c",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "prepack": "npm run build"
+  },
+  "main": "dist/esm/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PollyGotACracker/wanted-cdd-storybook.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/PollyGotACracker/wanted-cdd-storybook/issues"
+  },
+  "homepage": "https://github.com/PollyGotACracker/wanted-cdd-storybook#readme",
+  "devDependencies": {
+    "@storybook/addon-essentials": "7.0.21",
+    "@storybook/addon-interactions": "7.0.21",
+    "@storybook/addon-links": "7.0.21",
+    "@storybook/blocks": "7.0.21",
+    "@storybook/react": "7.0.21",
+    "@storybook/testing-library": "0.0.14-next.2",
+    "esbuild": "^0.18.4",
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "rollup-plugin-esbuild": "^5.0.0",
+    "storybook": "7.0.21"
+  },
+  "dependencies": {
+    "@material-design-icons/svg": "^0.14.9",
+    "@storybook/react-webpack5": "7.0.21",
+    "styled-components": "6.0.0-rc.3"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "6.0.0-rc.3"
+  }
+}
