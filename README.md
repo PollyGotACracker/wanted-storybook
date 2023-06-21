@@ -12,7 +12,7 @@
 npm init -y
 ```
 
-3. storybook 설치 (webpack, react 사용)
+3. storybook 설치 (webpack, react)
 
 ```shell
 npx storybook@latest init
@@ -85,9 +85,10 @@ export default {
 ```
 
 - package.json
+  - "keywords": ["A", "B", ... ] : npm keywords(hashtag)
 
 ```json
-// "keywords": ["A", "B", ... ] : npm keywords(hashtag)
+
 	"keywords": [],
   "scripts": {
 		"build": "rm -rf dist && rollup -c",
@@ -194,7 +195,7 @@ npm run build-storybook
 
 ### storybook 실행
 
-- http://localhost:6006/
+- 기본 port 는 6006 이다.
 
 ```shell
 npm run storybook
@@ -202,7 +203,7 @@ npm run storybook
 
 ### gitignore 파일 생성
 
-- [toptal:gitignore.io](https://www.toptal.com/developers/gitignore)
+- [toptal: gitignore.io](https://www.toptal.com/developers/gitignore)
 
 ### package 재배포
 
