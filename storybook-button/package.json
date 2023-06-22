@@ -42,7 +42,6 @@
     "storybook": "7.0.21"
   },
   "dependencies": {
-    "@material-design-icons/svg": "^0.14.9",
     "@storybook/react-webpack5": "7.0.21",
     "styled-components": "6.0.0-rc.3"
   },

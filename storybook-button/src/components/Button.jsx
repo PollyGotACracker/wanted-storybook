@@ -3,127 +3,108 @@ import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
 /**
- * Primary UI component for user interaction
+ * Button component
  */
 export const Button = ({
+  children,
   primary,
-  corner,
-  icon,
+  backgroundColor,
+  textColor,
   size,
-  color,
+  corner,
+  shadow,
   disabled,
   onClick,
-  label,
   ...props
 }) => {
   return (
     <DefaultButton
       $primary={primary}
-      $corner={corner}
-      $icon={icon}
+      $backgroundColor={backgroundColor}
+      $textColor={textColor}
       $size={size}
-      $color={color}
+      $corner={corner}
+      $shadow={shadow}
       onClick={onClick}
       disabled={disabled}
       type="button"
       {...props}
     >
-      {label}
+      {children}
     </DefaultButton>
   );
 };
 
-const getType = (color, primary) => {
-  // hover 색상 변경할 것
+const getType = (backgroundColor, textColor, primary) => {
   if (primary) {
     return css`
-      background: ${color};
-      color: white;
+      background: ${backgroundColor};
+      color: ${textColor};
       border: 1px solid transparent;
-
-      &:hover:enabled {
-        background: #3066cd;
-      }
-      &:focus-visible {
-        outline: 3px solid #414dc4;
+      &:after {
+        background: rgba(255, 255, 255, 0.8);
       }
     `;
   }
   if (!primary) {
     return css`
       background: transparent;
-      border: 1px solid ${color};
-      color: ${color};
-
-      &:hover:enabled {
-        border-color: #3066cd;
-      }
-      &:focus-visible {
-        outline: 3px solid #414dc4;
+      border: 1px solid ${backgroundColor};
+      color: ${backgroundColor};
+      &:after {
+        background: ${backgroundColor};
       }
     `;
   }
 };
 
 const getSize = (size) => {
-  // padding 으로 변경할 것
-  if (size === "small") {
-    return css`
-      min-width: 100px;
-      padding: 8px 12px;
-      font-size: 0.8rem;
-      line-height: 0.7rem;
-    `;
-  }
-  if (size === "medium") {
-    return css`
-      min-width: 150px;
-      padding: 15px 40px;
-      font-size: 1rem;
-      line-height: 0.9rem;
-    `;
-  }
-  if (size === "large") {
-    return css`
-      min-width: 300px;
-      padding: 20px 80px;
-      font-size: 1.1rem;
-      line-height: 1rem;
-    `;
-  }
-  if (size === "full") {
-    return css`
-      min-width: 100%;
-      padding: 20px 80px;
-      font-size: 1.1rem;
-      line-height: 1rem;
-    `;
-  }
+  const value = {
+    small: {
+      minWidth: "100px",
+      padding: "8px 12px",
+      fontSize: "0.8rem",
+    },
+    medium: {
+      minWidth: "150px",
+      padding: "15px 40px",
+      fontSize: "1rem",
+    },
+    large: {
+      minWidth: "300px",
+      padding: "20px 80px",
+      fontSize: "1.1rem",
+    },
+    full: {
+      minWidth: "100%",
+      padding: "20px 80px",
+      fontSize: "1.4rem",
+    },
+  };
+
+  return css`
+    min-width: ${value[size].minWidth};
+    padding: ${value[size].padding};
+    font-size: ${value[size].fontSize};
+    line-height: ${value[size].fontSize};
+    & * {
+      font-size: ${value[size].fontSize} !important;
+    }
+  `;
 };
 
 const getCorner = (corner) => {
   const value = {
     none: "0px",
     small: "3px",
-    large: "8px",
-    circle: "50%",
+    medium: "8px",
+    large: "15px",
     pill: "999px",
   };
   return css`
     border-radius: ${value[corner]};
   `;
 };
-
-// const getIconSize = (label, icon) => {
-//   const isLabel = !label | (label === "");
-//   const isIcon = icon | (icon !== "");
-//   if (isLabel && isIcon) {
-//     return css`
-//       aspect-ratio: 1 / 1;
-//       border-radius: 50%;
-//     `;
-//   }
-// };
 
 const DefaultButton = styled.button`
   box-sizing: border-box;
@@ -133,25 +114,30 @@ const DefaultButton = styled.button`
   align-items: center;
   padding: 14px;
   gap: 5px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   outline: 0;
   transition: all 0.2s ease;
   position: relative;
   cursor: pointer;
   user-select: none;
   overflow: hidden;
-  ${(props) => getType(props.$color, props.$primary)}
+  transition: all 0.2s ease;
+  ${(props) =>
+    props.$shadow &&
+    css`
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    `}
+  ${(props) =>
+    getType(props.$backgroundColor, props.$textColor, props.$primary)}
   ${(props) => getSize(props.$size)}
   ${(props) => getCorner(props.$corner)}
 
-  &:after {
+  &:enabled:after {
     content: "";
     position: absolute;
     width: 150px;
     height: 150px;
     left: calc(50% - 150px / 2 - 0px);
     top: calc(50% - 150px / 2 - 0.5px);
-    background: rgba(255, 255, 255, 0.8);
     opacity: 0;
     border-radius: 50%;
     z-index: 1;
@@ -159,11 +145,16 @@ const DefaultButton = styled.button`
     transition: all 0.8s ease;
     transform: scale(1);
   }
-
-  &:active:enabled:after {
+  &:enabled:active:after {
     opacity: 0.6;
     transition: 0s;
     transform: scale(0);
+  }
+  &:enabled:hover {
+    filter: hue-rotate(90deg);
+  }
+  &:enabled:focus-visible {
+    outline: 2px solid black;
   }
   &:disabled {
     filter: grayscale(80%);
@@ -176,13 +167,17 @@ Button.propTypes = {
   /**
    * Button contents
    */
-  label: PropTypes.string,
+  children: PropTypes.node.isRequired,
   /**
-   * Button background or text color
+   * Button background color
    */
-  color: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
   /**
-   * Fill the background color or Create an outline
+   * Button text color(for primary button)
+   */
+  textColor: PropTypes.string,
+  /**
+   * Fill the background color or create an outline
    */
   primary: PropTypes.bool,
   /**
@@ -192,13 +187,13 @@ Button.propTypes = {
   /**
    * Button corner roundness
    */
-  corner: PropTypes.oneOf(["none", "small", "large", "circle", "pill"]),
+  corner: PropTypes.oneOf(["none", "small", "medium", "large", "pill"]),
   /**
-   * Google Material Design Icons
+   * Make a shadow under the button
    */
-  icon: PropTypes.string,
+  shadow: PropTypes.bool,
   /**
-   * Button disabled attribute
+   * Value of button disabled attribute
    */
   disabled: PropTypes.oneOf([true, false]),
   /**
@@ -208,11 +203,11 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  label: "Button",
   primary: true,
+  textColor: "#FFFFFF",
   size: "medium",
   corner: "none",
-  icon: "",
+  shadow: false,
   disabled: false,
   onClick: undefined,
 };

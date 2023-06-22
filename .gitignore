@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/storybookjs,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=storybookjs,react
 
+### Exclude svg files folder ###
+icons
+
 ### react ###
 .DS_*
 *.log
