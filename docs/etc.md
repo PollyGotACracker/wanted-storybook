@@ -31,3 +31,17 @@ npm version patch
   - feat 접두사 => Minor Update
   - fix 접두사 => Patch Update
   - docs 접두사 => Patch Update
+
+## storybook 연동 및 배포
+
+- storybook 과 figma 를 연동할 수 있다.
+- chromatic 으로 배포하면 부가 기능도 추가할 수 있다.  
+  개인일 경우 무료로 배포 가능하다.
+
+## prop-types vs TypeScript
+
+- prop-types(PropTypes):  
+  런타임 때 type 을 검사해 console 에 경고를 띄워주는 라이브러리  
+  (development 환경에서만 가능, production 에서는 불가능)
+- TypeScript:  
+  컴파일 때 type 을 검사하여 IDE 에서 경고를 띄움

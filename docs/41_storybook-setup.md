@@ -1,4 +1,4 @@
-# Setup
+# Storybook Setup
 
 1. 라이브러리로 (사용될) 저장소 만들기
 2. npm 환경 초기화 (npm 등)
